@@ -225,23 +225,15 @@
     _contentView.relativeOrigin = [_parentView convertPoint:fromPoint toView:_contentView];
     
     [self.view removeFromSuperview];
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    if(windows.count > 0) {
-        _parentView=nil;
-        _window = [windows objectAtIndex:0];
-        //keep the first subview
-        if(_window.subviews.count > 0)
-        {
-            _parentView = [_window.subviews objectAtIndex:0];
-            [_parentView addSubview:self.view];
-            [_viewController viewDidAppear:YES];
-        }
-        
-    } else {
-        [self dismissPopoverAnimated:NO];
-    }
-    
-    
+    _window = [UIApplication sharedApplication].keyWindow;
+	_parentView=nil;
+	//keep the first subview
+	if(_window.subviews.count > 0)
+	{
+		_parentView = [_window.subviews objectAtIndex:0];
+		[_parentView addSubview:self.view];
+		[_viewController viewDidAppear:YES];
+	}
     
     [self setupView];
     self.view.alpha = 0.0;
@@ -534,7 +526,7 @@
 #pragma mark Transparency
 
 - (void)setAlpha:(CGFloat)alpha {
-    _alpha = alpha; 
+    _alpha = alpha;
     self.view.alpha = alpha;
 }
 
